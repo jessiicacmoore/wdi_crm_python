@@ -37,8 +37,9 @@ class Contact:
         """ This method should accept an id as an argument
     and return the contact who has that id
     """
-        found_contact = Contact.contacts[num - 1]
-        return f"{found_contact.first_name} {found_contact.last_name}: {found_contact.email} - {found_contact.note}"
+        for contact in cls.contacts:
+            if contact.id == num:
+                return contact
 
     def update(self, attribute_str, new_value):
         """ This method should allow you to specify
@@ -57,8 +58,8 @@ class Contact:
     """
         for contact in cls.contacts:
             if getattr(contact, attribute_str) == search_value:
-                return f"{contact.first_name} {contact.last_name}: {contact.email} - {contact.note}"
-
+                return contact
+                
     @classmethod
     def delete_all(cls):
         """This method should delete all of the contacts"""
@@ -79,37 +80,37 @@ class Contact:
     HINT: Check the Array class docs for built-in methods that might be useful here
     """
         Contact.contacts.remove(self)
-        Contact.next_id -= 1
+   
 
 
     # Feel free to add other methods here, if you need them.
 
 
-contact1 = Contact.create(
-    "Betty", "Maker", "bettymakes@bitmakerlabs.com", "Loves Pokemon"
-)
-contact2 = Contact.create("Bit", "Bot", "bitbot@bitmakerlabs.com", "beep boop")
+# contact1 = Contact.create(
+#     "Betty", "Maker", "bettymakes@bitmakerlabs.com", "Loves Pokemon"
+# )
+# contact2 = Contact.create("Bit", "Bot", "bitbot@bitmakerlabs.com", "beep boop")
 
-print(len(Contact.contacts))
+# print(len(Contact.contacts))
 
-print(contact1.id)
-print(contact2.id)
-print(
-    Contact.all()
-)  # ['1. Betty Maker: bettymakes@bitmakerlabs.com - Loves Pokemon', '2. Bit Bot: bitbot@bitmakerlabs.com - beep boop']
-print(Contact.find(1))  # Betty Maker: bettymakes@bitmakerlabs.com - Loves Pokemon
-print(Contact.find(2))  # Bit Bot: bitbot@bitmakerlabs.com - beep boop
+# print(contact1.id)
+# print(contact2.id)
+# print(
+#     Contact.all()
+# )  # ['1. Betty Maker: bettymakes@bitmakerlabs.com - Loves Pokemon', '2. Bit Bot: bitbot@bitmakerlabs.com - beep boop']
+# print(Contact.find(1))  # Betty Maker: bettymakes@bitmakerlabs.com - Loves Pokemon
+# print(Contact.find(2))  # Bit Bot: bitbot@bitmakerlabs.com - beep boop
 
-contact2.update("note", "This is a new note!")
-print(contact2.note)  # This is a new note!
+# contact2.update("note", "This is a new note!")
+# print(contact2.note)  # This is a new note!
 
-print(Contact.find_by("first_name", "Bit"))
+# print(Contact.find_by("first_name", "Bit"))
 
-# Contact.delete_all()
-print(Contact.all())
-print(Contact.next_id)
+# # Contact.delete_all()
+# print(Contact.all())
+# print(Contact.next_id)
 
-print(contact1.full_name())
+# print(contact1.full_name())
 
-contact2.delete()
-print(Contact.all())
+# contact2.delete()
+# print(Contact.all())
