@@ -1,116 +1,23 @@
-class Contact:
+from peewee import SqliteDatabase, Model, CharField, TextField
 
-    contacts = []
-    next_id = 1
+db = SqliteDatabase('crm.db')
 
-    def __init__(self, first, last, email, note):
-        """This method should initialize the contact's attributes"""
-        self.first_name = first
-        self.last_name = last
-        self.email = email
-        self.note = note
-        self.id = Contact.next_id
-        Contact.next_id += 1
 
-    @classmethod
-    def create(cls, first, last, email, note):
-        """This method should call the initializer,
-    store the newly created contact, and then return it
-    """
-        contact = Contact(first, last, email, note)
-        cls.contacts.append(contact)
+class Contact(Model):
 
-        return contact
+    first_name = CharField()
+    last_name = CharField()
+    email = CharField()
+    note = TextField()
 
-    @classmethod
-    def all(cls):
-        """This method should return all of the existing contacts"""
-        all_contacts = []
-        for contact in cls.contacts:
-            all_contacts.append(
-                f"{contact.id}. {contact.first_name} {contact.last_name}: {contact.email} - {contact.note}"
-            )
-        return all_contacts
-
-    @classmethod
-    def find(cls, num):
-        """ This method should accept an id as an argument
-    and return the contact who has that id
-    """
-        for contact in cls.contacts:
-            if contact.id == num:
-                return contact
-
-    def update(self, attribute_str, new_value):
-        """ This method should allow you to specify
-    1. which of the contact's attributes you want to update
-    2. the new value for that attribute
-    and then make the appropriate change to the contact
-    """
-        setattr(self, attribute_str, new_value)
-
-    @classmethod
-    def find_by(cls, attribute_str, search_value):
-        """This method should work similarly to the find method above
-    but it should allow you to search for a contact using attributes other than id
-    by specifying both the name of the attribute and the value
-    eg. searching for 'first_name', 'Betty' should return the first contact named Betty
-    """
-        for contact in cls.contacts:
-            if getattr(contact, attribute_str) == search_value:
-                return contact
-                
-    @classmethod
-    def delete_all(cls):
-        """This method should delete all of the contacts"""
-        delete_list = []
-        for contact in cls.contacts:
-            delete_list.append(contact)
-
-        for contact in delete_list:
-            cls.contacts.remove(contact)
-            cls.next_id -= 1
+    class Meta:
+        database = db
 
     def full_name(self):
         """Returns the full (first and last) name of the contact"""
         return f"{self.first_name} {self.last_name}"
 
-    def delete(self):
-        """This method should delete the contact
-    HINT: Check the Array class docs for built-in methods that might be useful here
-    """
-        Contact.contacts.remove(self)
-   
 
+db.connect()
+db.create_tables([Contact])
 
-    # Feel free to add other methods here, if you need them.
-
-
-# contact1 = Contact.create(
-#     "Betty", "Maker", "bettymakes@bitmakerlabs.com", "Loves Pokemon"
-# )
-# contact2 = Contact.create("Bit", "Bot", "bitbot@bitmakerlabs.com", "beep boop")
-
-# print(len(Contact.contacts))
-
-# print(contact1.id)
-# print(contact2.id)
-# print(
-#     Contact.all()
-# )  # ['1. Betty Maker: bettymakes@bitmakerlabs.com - Loves Pokemon', '2. Bit Bot: bitbot@bitmakerlabs.com - beep boop']
-# print(Contact.find(1))  # Betty Maker: bettymakes@bitmakerlabs.com - Loves Pokemon
-# print(Contact.find(2))  # Bit Bot: bitbot@bitmakerlabs.com - beep boop
-
-# contact2.update("note", "This is a new note!")
-# print(contact2.note)  # This is a new note!
-
-# print(Contact.find_by("first_name", "Bit"))
-
-# # Contact.delete_all()
-# print(Contact.all())
-# print(Contact.next_id)
-
-# print(contact1.full_name())
-
-# contact2.delete()
-# print(Contact.all())
