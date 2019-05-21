@@ -44,7 +44,7 @@ class CRM:
     email = input()
     print('Enter note:')
     note = input()
-    
+
     contact = Contact.create(
       first_name=first_name,
       last_name=last_name,
@@ -54,7 +54,7 @@ class CRM:
   
   def modify_existing_contact(self):
     print("Please enter the id of the contact you would like to delete")
-    modify_id = input()
+    modify_id = int(input())
 
     print("Please enter the attribute you would like to modify")
     modify_attribute = input()
@@ -62,14 +62,14 @@ class CRM:
     print("Please enter your modification")
     modification = input()
 
-    contact = Contact.find(modify_id)
+    contact = Contact.get(id=modify_id)
     contact.update(modify_attribute, modification)
 
   
   def delete_contact(self):
     print("Please enter the id of the contact you would like to delete")
     delete_id = int(input())
-    contact = Contact.find(delete_id)
+    contact = Contact.get(id=delete_id)
     contact.delete()
   
   def display_all_contacts(self):
