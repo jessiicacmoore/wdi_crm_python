@@ -37,15 +37,20 @@ class CRM:
   
   def add_new_contact(self):
     print('Enter first name:')
-    first = input()
+    first_name = input()
     print('Enter last name:')
-    last = input()
+    last_name = input()
     print('Enter email:')
     email = input()
     print('Enter note:')
     note = input()
-
-    Contact.create(first, last, email, note)
+    
+    contact = Contact.create(
+      first_name=first_name,
+      last_name=last_name,
+      email=email,
+      note=note
+      )
   
   def modify_existing_contact(self):
     print("Please enter the id of the contact you would like to delete")
